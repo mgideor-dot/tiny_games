@@ -1,0 +1,17 @@
+local virtual_w = 160
+local virtual_h = 90
+
+function init(self)
+	local width, height = window.get_size()
+	print("Display Width: "..width)
+
+	--calculate zoom
+	local zoom = width / virtual_w
+	camera.set_orthographic_zoom("#camera", zoom)
+end
+
+function on_message(self, message_id, message, sender)
+	-- Add message-handling code here
+	-- Learn more: https://defold.com/manuals/message-passing/
+	-- Remove this function if not needed
+end
