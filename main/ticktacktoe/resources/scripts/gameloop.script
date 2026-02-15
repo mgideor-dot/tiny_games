@@ -1,0 +1,50 @@
+local sim_mod = require("main.ticktacktoe.modules.simulation")
+local state_mod = require("main.ticktacktoe.modules.state")
+local present_mod = require("main.ticktacktoe.modules.presentation")
+local grid_mod = require("main.shared.modules.grid")
+
+--game variables
+local grid_size = vmath.vector3(3, 3, 0)
+local tile_size = vmath.vector3(16, 16, 0)
+local grid_pos = vmath.vector3(0, 0, 0)
+local tile_count = 9
+local cam_id = "/camera#camera"
+
+--constants Messages
+local MSG_COMMAND = hash("COMMAND")
+
+--constants Input
+local INPUT_TOUCH = hash("touch")
+
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	-- create game data Objects 
+	self.state = state_mod.new()
+	self.presentation = present_mod.new()
+	self.grid = grid_mod.create_grid(grid_size, tile_size, grid_pos)
+	--create visual Board
+	present_mod.create_board(self.presentation, self.grid, tile_count)
+end
+
+
+function on_message(self, message_id, message, sender)
+	if message_id == MSG_COMMAND then
+		pprint(message.cmd)
+		local present_data = sim_mod.step(self.state, message.cmd )
+		if not present_data.ok then return print(present_data.reason) end --Daten nicht korrekt, keine änderung der Präsentation
+		present_mod.apply(self.presentation, present_data) 
+	end
+end
+
+
+function on_input(self, action_id, action)
+	if action_id == INPUT_TOUCH and action.released then 
+		--check, if this is a click on the board, not outside
+		local touch_world_position = camera.screen_xy_to_world(action.screen_x, action.screen_y, cam_id)
+		local result = grid_mod.is_point_in_grid(self.grid, touch_world_position)
+		if not result then return end
+		local new_index = grid_mod.get_id_from_position(self.grid, touch_world_position)
+		msg.post(".", MSG_COMMAND, {cmd = { type = "PLACE", index = new_index }})
+	end
+end

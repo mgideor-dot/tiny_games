@@ -1,0 +1,16 @@
+name: "ttt_game"
+scale_along_z: 0
+embedded_instances {
+  id: "ttt_game"
+  data: "components {\n"
+  "  id: \"ttt_game\"\n"
+  "  component: \"/main/ticktacktoe/resources/scripts/gameloop.script\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"tiles\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/main/ticktacktoe/resources/gameobjects/tile.go\\\"\\n"
+  "\"\n"
+  "}\n"
+  ""
+}

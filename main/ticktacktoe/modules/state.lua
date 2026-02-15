@@ -5,10 +5,17 @@
 
 local M = {}
 
-M.state = {
-	board = { 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-	current_player = 1,
-	winner = 0
-}
+function M.new()
+	local state = 
+	{
+		board = { 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		current_player = 1,
+		winner = 0
+	}
+
+	return state
+end
+
+
 
 return M

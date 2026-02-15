@@ -17,7 +17,7 @@ function M.create_grid(grid_size, tile_size, grid_pos) --grid_pos => scene_pos, 
     return grid
 end
 
-function M.is_Point_in_grid(grid, position_to_check)
+function M.is_point_in_grid(grid, position_to_check)
     -- if position x is outside of the grid range, then return false
     if position_to_check.x < grid.start_pos.x or position_to_check.x > grid.start_pos.x + (grid.grid_size.x * grid.tile_size.x) then
         return false
@@ -30,23 +30,23 @@ function M.is_Point_in_grid(grid, position_to_check)
 end
 
 function M.convert_from_id_to_multiple(grid, id)
-    local y_id = math.floor(id / grid.grid_size.x)
-    local x_id = math.floor(id - (y_id * grid.grid_size.x))
+    local y_id = math.floor((id - 1) / grid.grid_size.x)
+    local x_id = math.floor((id - 1) - (y_id * grid.grid_size.x))
     return x_id, y_id
  end
 
  function M.convert_from_multiple_to_id(grid, id_x, id_y)
-    return id_y * grid.grid_size.x + id_x
+    return ((id_y-1) * grid.grid_size.x + (id_x-1))+1
  end
 
 function M.get_id_from_position(grid, scene_pos)
-    local is_on_grid = M.is_Point_in_grid(grid, scene_pos)
+    local is_on_grid = M.is_point_in_grid(grid, scene_pos)
     if is_on_grid == true then
         local x_dist = scene_pos.x - grid.start_pos.x
         local x_id = math.floor(x_dist / grid.tile_size.x)
         local y_dist = scene_pos.y - grid.start_pos.y
         local y_id =  math.floor(y_dist / grid.tile_size.y)
-        return y_id * grid.grid_size.x + x_id
+        return (y_id * grid.grid_size.x + x_id)+1
     else
         return -1
     end

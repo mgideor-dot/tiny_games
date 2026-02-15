@@ -1,7 +1,7 @@
 name: "main"
 collection_instances {
   id: "ttt_game"
-  collection: "/main/ttt_core/ttt_game.collection"
+  collection: "/main/ticktacktoe/resources/collections/ttt_game.collection"
 }
 scale_along_z: 0
 embedded_instances {
