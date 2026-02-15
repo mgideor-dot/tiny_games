@@ -4,19 +4,9 @@
 -- in any script using the functions.
 
 local M = {}
+--constants Messages
+M.MSG_COMMAND = hash("command")
 
-function M.new()
-	local state = 
-	{
-		board = { 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-		current_player = 1,
-		winner = 0,
-		is_input_enabled = false -- if false, all input
-	}
-
-	return state
-end
-
-
-
+--constants Input
+M.INPUT_TOUCH = hash("touch")
 return M

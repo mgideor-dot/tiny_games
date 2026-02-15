@@ -6,7 +6,7 @@
 
 local M = {}
 
-function M.create_grid(grid_size, tile_size, grid_pos) --grid_pos => scene_pos, not screen_pos!!!
+function M.new(grid_size, tile_size, grid_pos) --grid_pos => scene_pos, not screen_pos!!!
     local grid = {}
     grid.grid_size = grid_size
     grid.tile_size = tile_size
